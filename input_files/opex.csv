@@ -1,0 +1,16 @@
+AF1 OPEX;
+ES;123456;
+ES-HV_field:1;
+VVN_vzduch;56987;
+VVN_vzduch-VVN_vedenie:1;
+VN_vzduch;12365478;
+VN_vzduch-VN_ocel:0,19;
+VN_vzduch-VN_drevo:0,15;
+VN_vzduch-VN_beton:0,66;
+DTS;1122334;
+DTS-DTS_stoziarova:1;
+NN_vzduch;142536;
+NN_vzduch-NN_vedenie:1;
+NN_kabel;203654;
+NN_kabel-NN_izolovane:1;
+;;;;;;;;;;;;;;
