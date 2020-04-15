@@ -12,15 +12,21 @@ import java.util.Map;
 /** This class is used for reading ASIM data from given file.*/
 public class ASIMReader extends AbstractReader {
 
-    final int SIMULATION_YEARS = 11;
-    public ASIMReader(String fileName)
+    private int SIMULATION_YEARS;
+
+    public ASIMReader(String fileName, int numberYears)
     {
         this.fileName = fileName;
+        this.SIMULATION_YEARS = numberYears;
     }
 
 
     /**This method reads input data from given file and returns them.
-     * @throws IOException when trouble with creating reader.*/
+     * @return AsimData
+     * @throws IOException when trouble with creating reader.
+     * @throws WrongDataFormatException when data are not as expected format
+     * For information about return type please see:
+     * @see AsimData*/
     public AsimData readASIMFile() throws IOException, WrongDataFormatException {
 
         AsimData result = new AsimData();
@@ -28,8 +34,7 @@ public class ASIMReader extends AbstractReader {
         {
             String line = reader.readLine();
             Directions dir = Directions.def;
-            Map<Directions,Map<String, double[]>> finalASIMData = new HashMap<>();
-            Map<String, double[]> directionLines = new HashMap<>();
+
             while (!onlySemicolonsOnLine(line))
             {
                 String[] lineArr = line.split(";",0); //should remove empty entries in array

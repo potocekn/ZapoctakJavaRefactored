@@ -2,8 +2,8 @@ package treeParts.ds;
 
 import calculations.utils.CalcUtil;
 
-/**This abstract class represents all assets in the hierarchy. It contains all necessary features that all assets in the tree must contain.
- * The features are: price, ratio, metric, planned finance, additional finance and amound of asset.*/
+/**This generic class represents all assets in the hierarchy. It contains all necessary features that all assets in the tree must contain.
+ * The features are: name, price, ratio, metric, planned finance, additional finance and amount of asset.*/
 public class Asset {
     public String name;
     public int price;
@@ -25,28 +25,14 @@ public class Asset {
         this.metric = metric;
     }
 
-    /**This method calculates result items.*/
+    /**This method calculates result items. First it calculates prices of items with respect to inflation.
+     * Then it calculates amount of item for each year of simulation.
+     * @param inflation represents array of inflation values for each year of simulation.*/
     public void calculate(double[] inflation)
     {
         double[] totalMoney = utilAsset.addArrays(plannedFinance,additionalFinance);
         double[] priceWithInflation = utilAsset.multiply(utilAsset.inflationMultiply(inflation),price);
         amount = utilAsset.divideArrays(totalMoney,priceWithInflation);
-    }
-
-    /**This method returns product of two given arrays (multiplication by values).*/
-    public double[] multiply(double[] ratios, double[] money)
-    {
-        if ((ratios == null) || (money == null))
-        {
-            return null;
-        }
-        double[] result = new double[Math.max(ratios.length,money.length)];
-        for (int i = 0; i < Math.min(ratios.length,money.length);i++)
-        {
-            result[i] = ratios[i]*money[i];
-        }
-
-        return result;
     }
 
     public String getName() {

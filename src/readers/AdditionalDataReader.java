@@ -1,12 +1,11 @@
 package readers;
 
+import dataClasses.AdditionalData;
 import exceptions.WrongDataFormatException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**This class reads all additional data from given file, like: inflation, beginning year and ending year*/
 public class AdditionalDataReader extends AbstractReader{
@@ -17,10 +16,14 @@ public class AdditionalDataReader extends AbstractReader{
     }
 
     /**This method reads data from file and returns them.
-     * @throws IOException if there is trouble with creating reader.*/
-    public Map<String,double[]> readAdditionalData() throws IOException, WrongDataFormatException {
+     * @return AdditionalData
+     * @throws IOException if there is trouble with creating reader.
+     * For information about return type please see:
+     * @see AdditionalData*/
+    public AdditionalData readAdditionalData() throws IOException, WrongDataFormatException {
         try(BufferedReader reader = new BufferedReader(new FileReader(fileName)))
         {
+            AdditionalData result = new AdditionalData();
             String beginningYearLine = reader.readLine();
             String endingYearLine = reader.readLine();
             String inflationLine = reader.readLine();
@@ -33,6 +36,7 @@ public class AdditionalDataReader extends AbstractReader{
             if (isNumber(beginningYearArr[1]))
             {
                 beginningYear = Integer.parseInt(beginningYearArr[1]);
+                result.setBeginningYear(beginningYear);
             }
             else
             {
@@ -43,6 +47,7 @@ public class AdditionalDataReader extends AbstractReader{
             if (isNumber(endingYearArr[1]))
             {
                 endingYear = Integer.parseInt(endingYearArr[1]);
+                result.setEndingYear(endingYear);
             }
             else
             {
@@ -72,9 +77,7 @@ public class AdditionalDataReader extends AbstractReader{
 
                 if (success)
                 {
-                    Map<String,double[]> result = new HashMap<>();
-                    String key = beginningYear + "_" +endingYear;
-                    result.put(key,inflationYearly);
+                    result.setInflation(inflationYearly);
                     return result;
                 }
                 else

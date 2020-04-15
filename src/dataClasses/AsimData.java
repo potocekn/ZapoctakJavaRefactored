@@ -5,12 +5,14 @@ import readers.Directions;
 import java.util.HashMap;
 import java.util.Map;
 
+/**This class represents data that can be obtained from asim.csv file or pomerASIM.csv file.
+ * directionsData is variable that is used for partial calculation of data for each direction.
+ * finalData contains all data that are needed for further calculations.*/
 public class AsimData {
 
     Map<String,double[]> directionsData;
     Map<Directions,Map<String, double[]>> finalData;
 
-    /**Implicit constructor. Sets default values for directionsData and finalData.*/
     public AsimData()
     {
         this.directionsData = new HashMap<>();

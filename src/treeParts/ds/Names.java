@@ -1,4 +1,6 @@
 package treeParts.ds;
+
+/**This class contains names of Assets. There are two options for format of these names: print format and input format.*/
 public enum Names
 {
      VVN_CABLE("VVN_cable"),
@@ -34,9 +36,12 @@ public enum Names
         this.name = name;
     }
 
+    /**this method returns input format of the name.*/
     public String getName() {
         return name;
     }
+
+    /**This method returns print format of the name.*/
     public String getPrintName() {
         return name.replaceAll("_", " ");
     }

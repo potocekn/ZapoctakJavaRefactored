@@ -13,7 +13,9 @@ public class NN {
         this.nn_kabel = new NN_kabel(numberOfYears);
     }
 
-    /**This method calculates final amounts for each child.*/
+    /**This method calculates final amounts for each child.
+     * @param inflation represents array of inflation values for each year of simulation.
+     * @throws MissingDataException when there are some necessary data missing when calculating final results.*/
     public void calculate(double inflation[]) throws MissingDataException {
         try
         {

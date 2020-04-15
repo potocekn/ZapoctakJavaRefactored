@@ -1,4 +1,5 @@
 import calculations.Calculator;
+import exceptions.InvalidDirectionException;
 import exceptions.MissingDataException;
 import exceptions.WrongDataFormatException;
 import writer.ExcelWriter;
@@ -7,7 +8,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void  main(String[] args) throws IOException {
+    public static void  main(String[] args) {
         Helper helper = new Helper();
         String inputPath;
         String outputPath;
@@ -69,10 +70,16 @@ public class Main {
         //filling data
         try
         {
+            calculator.createTrees();
             calculator.fillData();
             calculator.calculateResultItems();
         }
         catch (MissingDataException e)
+        {
+            System.out.println(e.getMessage());
+            return;
+        }
+        catch (InvalidDirectionException e)
         {
             System.out.println(e.getMessage());
             return;

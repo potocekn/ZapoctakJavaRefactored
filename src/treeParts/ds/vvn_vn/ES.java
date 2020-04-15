@@ -1,11 +1,8 @@
-package treeParts.ds.vvn_nn;
+package treeParts.ds.vvn_vn;
 
-import exceptions.MissingDataException;
 import treeParts.ds.Asset;
 import treeParts.ds.MiddleLevel;
 import treeParts.ds.Names;
-
-import java.util.Map;
 
 /**This class represents mid-level in the tree hierarchy. To this class belong 6 assets HV_trafo, HV_field, PROTECTIONS, OWN_CONSUMPTION,
  * BUILDING, MV_field.*/

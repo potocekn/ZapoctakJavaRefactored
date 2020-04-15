@@ -23,13 +23,14 @@ public class ExcelWriter {
         this.data = data;
     }
 
-    /**This method writes row filled with years which are marked in input data.*/
+    /**This method writes row filled with years which are marked in input data.
+     * @param sheet represents current sheet
+     * @param row represents number of row
+     * @param startCol represents number of starting column*/
     private void writeYears(XSSFSheet sheet, int row, int startCol)
     {
-        String key = (String) data.getAdditionalData().keySet().toArray()[0];
-        String[] years = key.split("_");
-        int beginning = Integer.parseInt(years[0]);
-        int ending = Integer.parseInt(years[1]);
+        int beginning = data.getAdditionalData().getBeginningYear();
+        int ending = data.getAdditionalData().getEndingYear();
         Row newRow = sheet.createRow(row);
         for (int i = beginning; i <= ending; i++)
         {
@@ -39,7 +40,12 @@ public class ExcelWriter {
         }
     }
 
-    /**this method writes one row into given sheet filled with given data*/
+    /**This method writes one row into given sheet filled with given data.
+     * @param sheet represents current sheet
+     * @param row represents number of row
+     * @param startCol represents number of starting column
+     * @param rowName represents name of the row
+     * @param args represents values of the row*/
     private void writeRow(XSSFSheet sheet, int row, int startCol, String rowName, double[] args)
     {
         Row newRow = sheet.createRow(row);
@@ -63,14 +69,16 @@ public class ExcelWriter {
         }
 
     }
+    /**This method returns list of AF1 assets that are supposed to be written into output.
+     * @param af1Tree represents tree of AF1 level.*/
     private List<Asset> getAF1List(TreeCalculator af1Tree) {
         List<Asset> result = new ArrayList<>();
-        result.add(af1Tree.getDS().getVvn_nn().getEs().getAssets().get(Names.HV_TRAFO.getName()));
-        result.add(af1Tree.getDS().getVvn_nn().getEs().getAssets().get(Names.HV_FIELD.getName()));
-        result.add(af1Tree.getDS().getVvn_nn().getEs().getAssets().get(Names.PROTECTIONS.getName()));
-        result.add(af1Tree.getDS().getVvn_nn().getEs().getAssets().get(Names.OWN_CONSUMPTION.getName()));
-        result.add(af1Tree.getDS().getVvn_nn().getEs().getAssets().get(Names.BUILDING.getName()));
-        result.add(af1Tree.getDS().getVvn_nn().getEs().getAssets().get(Names.MV_FIELD.getName()));
+        result.add(af1Tree.getDS().getVvn_vn().getEs().getAssets().get(Names.HV_TRAFO.getName()));
+        result.add(af1Tree.getDS().getVvn_vn().getEs().getAssets().get(Names.HV_FIELD.getName()));
+        result.add(af1Tree.getDS().getVvn_vn().getEs().getAssets().get(Names.PROTECTIONS.getName()));
+        result.add(af1Tree.getDS().getVvn_vn().getEs().getAssets().get(Names.OWN_CONSUMPTION.getName()));
+        result.add(af1Tree.getDS().getVvn_vn().getEs().getAssets().get(Names.BUILDING.getName()));
+        result.add(af1Tree.getDS().getVvn_vn().getEs().getAssets().get(Names.MV_FIELD.getName()));
         result.add(af1Tree.getDS().getVvn().getVVN_vzduch().getAssets().get(Names.VVN_VEDENIE.getName()));
         result.add(af1Tree.getDS().getVvn().getVVN_vzduch().getAssets().get(Names.VVN_STOZIAR.getName()));
         result.add(af1Tree.getDS().getVn().getVn_vzduch().getAssets().get(Names.VN_OCEL.getName()));
@@ -87,7 +95,8 @@ public class ExcelWriter {
         return result;
     }
 
-    /**This method writes data for AF1.*/
+    /**This method writes data for AF1. Data are obtained from getAF1List method.
+     * @param sheet represents current sheet*/
     private void writeAF1(XSSFSheet sheet)
     {
         List<Asset> list = getAF1List(data.getAf1Tree());
@@ -100,7 +109,8 @@ public class ExcelWriter {
         writeRow(sheet,row++,1,"Netz",data.getAf1Tree().getDS().getNetz().getPlannedFinance());
 
     }
-
+    /**This method returns list of AF4 assets that are supposed to be written into output.
+     * @param af4Tree represents tree of AF1 level.*/
     private List<Asset> getAF4List(TreeCalculator af4Tree) {
         List<Asset> result = new ArrayList<>();
         result.add(af4Tree.getDS().getVvn().getVVN_vzduch().getAssets().get(Names.VVN_VEDENIE.getName()));
@@ -118,7 +128,8 @@ public class ExcelWriter {
         return result;
     }
 
-    /**This method writes data for AF4.*/
+    /**This method writes data for AF4.Data are obtained from getAF1List method.
+     * @param sheet represents current sheet*/
     private void writeAF4(XSSFSheet sheet)
     {
         List<Asset> list = getAF4List(data.getAf4Tree());
@@ -132,7 +143,8 @@ public class ExcelWriter {
 
     }
 
-    /**This method writes data for AF6.*/
+    /**This method writes data for AF6 Netz level.
+     * @param sheet represents current sheet*/
     private void writeAF6(XSSFSheet sheet)
     {
         writeYears(sheet,0,2);
@@ -142,7 +154,7 @@ public class ExcelWriter {
     }
 
     /**This method writes the tree data into excel file.*/
-    public void write(String path) throws IOException {
+    public void write(String path) {
         try
         {
             XSSFWorkbook workbook = new XSSFWorkbook();

@@ -1,5 +1,6 @@
 package readers;
 
+import dataClasses.AsimData;
 import exceptions.WrongDataFormatException;
 
 import java.io.BufferedReader;
@@ -11,24 +12,29 @@ import java.util.Map;
 /** This class is used for reading input ratio data from given file.*/
 public class RatioReader extends AbstractReader
 {
-    final int SIMULATION_YEARS = 11;
+    private int SIMULATION_YEARS;
 
-    public RatioReader(String fileName)
+    public RatioReader(String fileName, int numberYears)
     {
         this.fileName = fileName;
+        this.SIMULATION_YEARS = numberYears;
     }
 
-    /**This method is used for reading input ratio data
-     * @throws IOException when there is trouble when creating reader*/
-    public Map<Directions,Map<String,double[]>> readASIMRatios() throws IOException, WrongDataFormatException {
+    /**This method is used for reading input ratio data.
+     * @return AsimData
+     * @throws IOException when there is trouble when creating reader
+     * @throws WrongDataFormatException when there is some wrong format of data in input files
+     * For more information about return type please see:
+     * @see AsimData*/
+    public AsimData readASIMRatios() throws IOException, WrongDataFormatException {
 
         try(BufferedReader reader = new BufferedReader(new FileReader(fileName)))
         {
             String line = reader.readLine();
-            Map<Directions,Map<String,double[]>> result = new HashMap<>();
-            Map<String,double[]> ratio = new HashMap<>();
+            AsimData result = new AsimData();
+
             String key = "";
-            double[] ratios = new double[SIMULATION_YEARS]; //we plan for 11 years
+            double[] ratios = new double[SIMULATION_YEARS];
             String mainKey = "";
             Directions dir = Directions.def;
 
@@ -40,7 +46,7 @@ public class RatioReader extends AbstractReader
                 {
                     if (!mainKey.isEmpty()) //invalid key -> invalid table format
                     {
-                        result.put(dir,ratio);
+                        result.getFinalData().put(dir,result.getDirectionsData());
                     }
                     mainKey = lineArr[0];
 
@@ -60,8 +66,7 @@ public class RatioReader extends AbstractReader
                     {
                         throw new WrongDataFormatException("Wrong key in ratios file on line"+line);
                     }
-
-                    ratio = new HashMap<>();
+                    result.setDirectionsData(new HashMap<>());
                 }
                 else if (lineArr.length == 2) // constant ratio;
                 {
@@ -70,11 +75,11 @@ public class RatioReader extends AbstractReader
                     try{
                         val = Double.parseDouble(lineArr[1]);
                         ratios = new double[SIMULATION_YEARS];
-                        for (int i = 0; i < 11; i++)
+                        for (int i = 0; i < ratios.length; i++)
                         {
                             ratios[i] = val;
                         }
-                        ratio.put(key,ratios);
+                        result.getDirectionsData().put(key,ratios);
                     }
                     catch (NumberFormatException e)
                     {
@@ -92,7 +97,7 @@ public class RatioReader extends AbstractReader
                         {
                             ratios[i-1] = Double.parseDouble(lineArr[i]);
                         }
-                        ratio.put(key,ratios);
+                        result.getDirectionsData().put(key,ratios);
                     }
                     catch (NumberFormatException e)
                     {
@@ -101,8 +106,8 @@ public class RatioReader extends AbstractReader
                 }
                 line = reader.readLine();
             }//end of while
-            ratio.put(key,ratios);
-            result.put(dir,ratio);
+            result.getDirectionsData().put(key,ratios);
+            result.getFinalData().put(dir,result.getDirectionsData());
             return result;
         }//end of try
     }

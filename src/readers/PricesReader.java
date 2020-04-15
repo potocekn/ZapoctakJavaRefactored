@@ -1,5 +1,6 @@
 package readers;
 
+import dataClasses.PricesData;
 import exceptions.WrongDataFormatException;
 
 import java.io.BufferedReader;
@@ -11,22 +12,25 @@ import java.util.Map;
 /**This class contains all methods needed for reading data from prices.csv file*/
 public class PricesReader extends AbstractReader{
 
-
     public PricesReader(String fileName)
     {
-
         this.fileName = fileName;
     }
 
     /**This method reads input data for prices from given file and returns them.
-     * @throws IOException when there is trouble when creating reader.*/
-    public Map<Directions, Map<String, Integer>> readPrices() throws IOException, WrongDataFormatException {
+     * @return PricesData
+     * @throws IOException when there is trouble when creating reader.
+     * @throws WrongDataFormatException when data are not as expected format
+     * For more information about return type, please see:
+     * @see PricesData*/
+    public PricesData readPrices() throws IOException, WrongDataFormatException {
         try(BufferedReader reader = new BufferedReader(new FileReader(fileName)))
         {
-            Map<Directions, Map<String, Integer>> finalPrices = new HashMap<>();
             Map<String, Integer> af1Map = new HashMap<>();
             Map<String, Integer> af4Map = new HashMap<>();
             Map<String, Integer> af6Map = new HashMap<>();
+
+            PricesData result = new PricesData();
 
             String line = reader.readLine(); //we do not need first line, it's just header
 
@@ -43,7 +47,6 @@ public class PricesReader extends AbstractReader{
                     }
                     else
                     {
-                        //System.out.println("LineArr value: "+lineArr[i]);
                         try
                         {
                             values[i-1] = Integer.parseInt(lineArr[i]);
@@ -63,11 +66,11 @@ public class PricesReader extends AbstractReader{
             }//end of while
 
             //add directions maps to final map with correct direction key
-            finalPrices.put(Directions.AF1, af1Map);
-            finalPrices.put(Directions.AF4, af4Map);
-            finalPrices.put(Directions.AF6, af6Map);
+            result.setAf1tree(af1Map);
+            result.setAf4tree(af4Map);
+            result.setAf6tree(af6Map);
 
-            return finalPrices;
+            return result;
         }
     }
 }

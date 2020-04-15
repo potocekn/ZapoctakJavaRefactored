@@ -1,28 +1,29 @@
-package treeParts.ds.vn_nn;
+package treeParts.ds.vvn_vn;
 
 import exceptions.MissingDataException;
 
-/**This class represents VN_NN level in tree hierarchy. It contains 1 mid-level DTS.*/
-public class VN_NN {
-    private DTS dts;
+/**This class represents VVN_VN level in tree hierarchy. It contains 1 mid-level ES.*/
+public class VVN_VN {
 
-    public VN_NN(int numberOfYears)
+    private ES es;
+
+    public VVN_VN(int numberOfYears)
     {
-        this.dts = new DTS(numberOfYears);
+        this.es = new ES(numberOfYears);
     }
 
-    public DTS getDts() {
-        return dts;
+    public ES getEs() {
+        return es;
     }
 
-    public void setDts(DTS dts) {
-        this.dts = dts;
+    public void setEs(ES es) {
+        this.es = es;
     }
 
     /**This method calculates final amounts for each child.
      * @param inflation represents array of inflation values for each year of simulation.
      * @throws MissingDataException when there are some necessary data missing when calculating final results.*/
     public void calculate(double inflation[]) throws MissingDataException {
-        dts.calculate(inflation);
+        es.calculate(inflation);
     }
 }

@@ -4,8 +4,6 @@ import treeParts.ds.Asset;
 import treeParts.ds.MiddleLevel;
 import treeParts.ds.Names;
 
-import java.util.Map;
-
 /**This class represents mid-level in the tree hierarchy. To this class belongs one asset (NN_izolovane).*/
 public class NN_kabel extends MiddleLevel {
 

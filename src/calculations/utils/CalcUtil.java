@@ -6,7 +6,22 @@ import java.util.Map;
 /**This class contains methods used for calculating new data from given data.*/
 public final class CalcUtil {
 
-    /**This method returns sum of given arrays.*/
+    /**This method returns sum of given arrays (addition by values).
+     * @param arr is the array we would like to add
+     * @param constant is the constant that we should add the array with.*/
+    public double[] addArrayConstant(double[] arr, double constant)
+    {
+        double[] result = new double[arr.length];
+        for (int i = 0; i < arr.length; i++)
+        {
+            result[i] = arr[i] + constant;
+        }
+        return result;
+    }
+
+    /**This method returns sum of given arrays.
+     * @param arr1 represents the first array
+     * @param arr2 represents the second array*/
     public double[] addArrays(double[] arr1, double[] arr2)
     {
         double[] result = new double[Math.max(arr1.length,arr2.length)];
@@ -41,7 +56,9 @@ public final class CalcUtil {
         return result;
     }
 
-    /**This method returns product of given arrays*/
+    /**This method returns product of given arrays.
+     * @param arr1 represents first array
+     * @param arr2 represents second array*/
     public double[] multiplyArrays(double[] arr1, double[] arr2)
     {
         double[] result = new double[Math.max(arr1.length,arr2.length)];
@@ -63,7 +80,9 @@ public final class CalcUtil {
         return result;
     }
 
-    /**This method returns array of quotients of values in given arrays*/
+    /**This method returns array of quotients of values in given arrays.
+     * @param arr1 represents first array
+     * @param arr2 represents second array*/
     public double[] divideArrays(double[] arr1, double[] arr2)
     {
         double[] result = new double[Math.max(arr1.length,arr2.length)];
@@ -93,7 +112,9 @@ public final class CalcUtil {
         return result;
     }
 
-    /**This method returns product of given arrays (multiplication by values).*/
+    /**This method returns product of given array and double constant (multiplication).
+     * @param arr represents first array
+     * @param ratio represents ratio constant as double value*/
     public double[] multiply(double[] arr, double ratio)
     {
         double[] result = new double[arr.length];
@@ -104,7 +125,9 @@ public final class CalcUtil {
         return result;
     }
 
-    /**This method returns product of given array and constant (multiplication by values).*/
+    /**This method returns product of given array and integer constant (multiplication).
+     * @param arr represents the array
+     * @param ratio represents integer constant the array is musltiplied by*/
     public double[] multiply(double[] arr, int ratio)
     {
         double[] result = new double[arr.length];
@@ -115,7 +138,9 @@ public final class CalcUtil {
         return result;
     }
 
-    /**This method returns product of values in given map and given ratios.*/
+    /**This method returns product of values in given map and given ratios.
+     * @param map represents the map we would like to multiply
+     * @param ratios represents the array of ratios for multiplication*/
     public Map<String, double[]> multiplyMap(Map<String, double[]> map, double[] ratios)
     {
         Map<String, double[]> result = new HashMap<>();

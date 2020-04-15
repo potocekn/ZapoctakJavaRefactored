@@ -8,6 +8,9 @@ import java.io.IOException;
 /**This class contains all functions that will help with creating and checking data for further calculations*/
 public class Helper {
 
+    /**This method checks is given files exist.
+     * @param dirPath represents path to files
+     * @param files represents array of names of files*/
     public boolean filesExist(String dirPath, String[] files)
     {
         boolean result = true;
@@ -32,19 +35,21 @@ public class Helper {
         {
             Calculator calculator = new Calculator();
 
-            ASIMReader asimReader = new ASIMReader(dirPath+"/asim.csv");
+            AdditionalDataReader additionalDataReader = new AdditionalDataReader(dirPath+"/otherData.csv");
+            calculator.setAdditionalData(additionalDataReader.readAdditionalData());
+
+            int numberYears = calculator.getAdditionalData().getNumberOfYears();
+
+            ASIMReader asimReader = new ASIMReader(dirPath+"/asim.csv", numberYears);
             calculator.setAsimData(asimReader.readASIMFile());
 
             PricesReader pricesReader = new PricesReader(dirPath+"/prices.csv");
             calculator.setPrices(pricesReader.readPrices());
 
-            AdditionalDataReader additionalDataReader = new AdditionalDataReader(dirPath+"/otherData.csv");
-            calculator.setAdditionalData(additionalDataReader.readAdditionalData());
-
             OpexReader opexReader = new OpexReader(dirPath+"/opex.csv");
             calculator.setOpexData(opexReader.readOpexData());
 
-            RatioReader ratioReader = new RatioReader(dirPath+"/pomerASIM.csv");
+            RatioReader ratioReader = new RatioReader(dirPath+"/pomerASIM.csv", numberYears);
             calculator.setRatioData(ratioReader.readASIMRatios());
 
             return calculator;
