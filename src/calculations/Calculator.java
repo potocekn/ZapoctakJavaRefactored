@@ -1,18 +1,21 @@
 package calculations;
 
 import calculations.utils.CalcUtil;
-import dataClasses.AdditionalData;
-import dataClasses.AsimData;
-import dataClasses.OpexData;
-import dataClasses.PricesData;
+import dataClasses.*;
 import exceptions.InvalidDirectionException;
 import exceptions.MissingDataException;
-import readers.Directions;
+import dataClasses.Directions;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**This class contains input data and functions needed for their processing.*/
+/**This class contains input data and functions needed for their processing.
+ * In order to get correct data into trees, methods of this class have to be called in this order:
+ * 1) createTrees() which will create tree for each of investment directions.
+ * 2) fillData() which will get data from input files and put them in trees.
+ * 3) calculateResultItems() which will calculate result pieces/kilometres with respect to inflation, opex money and transfers from AF4 to AF1.
+ *
+ * Not respecting oredr of calling will end up in exception and program will fail.*/
 public class Calculator {
     final double AF4ToAF1 = 0.2; //fixed
 
@@ -23,21 +26,21 @@ public class Calculator {
     PricesData prices;
     AdditionalData additionalData; //years + inflation
 
-    TreeCalculator af1Tree;
-    TreeCalculator af4Tree;
-    TreeCalculator af6Tree;
+    Tree af1Tree;
+    Tree af4Tree;
+    Tree af6Tree;
 
     CalcUtil util = new CalcUtil();
 
-    public TreeCalculator getAf1Tree() {
+    public Tree getAf1Tree() {
         return af1Tree;
     }
 
-    public TreeCalculator getAf4Tree() {
+    public Tree getAf4Tree() {
         return af4Tree;
     }
 
-    public TreeCalculator getAf6Tree() {
+    public Tree getAf6Tree() {
         return af6Tree;
     }
 
@@ -564,8 +567,8 @@ public class Calculator {
      * Number of years is calculated as: endingYear - beginningYear +1.
      * */
     public void createTrees() {
-         af1Tree = new TreeCalculator(Directions.AF1, additionalData.getNumberOfYears());
-         af4Tree = new TreeCalculator(Directions.AF4, additionalData.getNumberOfYears());
-         af6Tree = new TreeCalculator(Directions.AF6, additionalData.getNumberOfYears());
+         af1Tree = new Tree(Directions.AF1, additionalData.getNumberOfYears());
+         af4Tree = new Tree(Directions.AF4, additionalData.getNumberOfYears());
+         af6Tree = new Tree(Directions.AF6, additionalData.getNumberOfYears());
     }
 }

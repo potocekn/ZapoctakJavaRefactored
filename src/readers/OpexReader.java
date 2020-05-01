@@ -30,7 +30,9 @@ public class OpexReader extends AbstractReader{
             String line = reader.readLine(); // we don't care about first line
             Map<String,Double> money = new HashMap<>();
             line = reader.readLine();
-            while(!onlySemicolonsOnLine(line))            {
+            try
+            {
+                while(!onlySemicolonsOnLine(line))            {
 
                     String[] lineArr = line.split(":",0);
                     String key = lineArr[0];
@@ -44,8 +46,18 @@ public class OpexReader extends AbstractReader{
                         throw new WrongDataFormatException("Wrong format of number in opex file on line : "+line);
                     }
 
-                line = reader.readLine();
-            }// end of while
+                    line = reader.readLine();
+                }// end of while
+            }
+            catch (NullPointerException e)
+            {
+                throw new WrongDataFormatException("Missing empty csv line at the end of opex file.");
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+                throw new WrongDataFormatException("Wrong format of empty csv line at the end of opex file.");
+            }
+
             result.setMoney(money);
             return result;
         }//end of try

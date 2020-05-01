@@ -1,7 +1,7 @@
 package writer;//package net.codejava.excel;
 
 import calculations.Calculator;
-import calculations.TreeCalculator;
+import dataClasses.Tree;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -71,7 +71,7 @@ public class ExcelWriter {
     }
     /**This method returns list of AF1 assets that are supposed to be written into output.
      * @param af1Tree represents tree of AF1 level.*/
-    private List<Asset> getAF1List(TreeCalculator af1Tree) {
+    private List<Asset> getAF1List(Tree af1Tree) {
         List<Asset> result = new ArrayList<>();
         result.add(af1Tree.getDS().getVvn_vn().getEs().getAssets().get(Names.HV_TRAFO.getName()));
         result.add(af1Tree.getDS().getVvn_vn().getEs().getAssets().get(Names.HV_FIELD.getName()));
@@ -111,7 +111,7 @@ public class ExcelWriter {
     }
     /**This method returns list of AF4 assets that are supposed to be written into output.
      * @param af4Tree represents tree of AF1 level.*/
-    private List<Asset> getAF4List(TreeCalculator af4Tree) {
+    private List<Asset> getAF4List(Tree af4Tree) {
         List<Asset> result = new ArrayList<>();
         result.add(af4Tree.getDS().getVvn().getVVN_vzduch().getAssets().get(Names.VVN_VEDENIE.getName()));
         result.add(af4Tree.getDS().getVvn().getVVN_vzduch().getAssets().get(Names.VVN_STOZIAR.getName()));

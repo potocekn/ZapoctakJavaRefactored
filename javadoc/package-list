@@ -1,6 +1,7 @@
 
 calculations
 calculations.utils
+dataClasses
 exceptions
 readers
 treeParts.ds
@@ -8,5 +9,5 @@ treeParts.ds.nn
 treeParts.ds.vn
 treeParts.ds.vn_nn
 treeParts.ds.vvn
-treeParts.ds.vvn_nn
+treeParts.ds.vvn_vn
 writer

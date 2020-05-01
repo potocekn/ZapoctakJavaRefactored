@@ -1,14 +1,13 @@
-package calculations;
+package dataClasses;
 
-import readers.Directions;
 import treeParts.ds.DS;
 
 /**This class represents tree that has its own distribution system and direction of investment*/
-public class TreeCalculator {
-    DS ds;
-    Directions direction;
+public class Tree {
+    public DS ds;
+    public Directions direction;
 
-    public TreeCalculator(Directions direction, int numberOfYears)
+    public Tree(Directions direction, int numberOfYears)
     {
         this.ds = new DS(numberOfYears);
         this.direction = direction;

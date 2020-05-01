@@ -1,11 +1,14 @@
 package dataClasses;
 
-import readers.Directions;
 import java.util.HashMap;
 import java.util.Map;
 
 /**This class represents data that are obtained from prices.csv file.
- * Class contains maps for directions AF1, AF4 and AF6.*/
+ * Class contains maps for directions AF1, AF4 and AF6.
+ *  Keys in this maps represent tuple of level 2 layer item in DS hierarchy and it's level 3 asset
+ *  (for example: VVN_vzduch-VVN_vedenie represents level 2 item VVN_vzduch and it's asset VVN_vedenie)
+ *  Integer value in this map represents price of given item per kilometer/piece.
+ *      */
 public class PricesData {
     private Map<String, Integer> af1tree;
     private Map<String, Integer> af4tree;
